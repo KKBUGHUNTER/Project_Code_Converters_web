@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            
         }
         .converter {
             margin: 20px;
@@ -23,28 +22,31 @@
     </style>
 </head>
 <body>
-    <div align=center><h1>Online Code Converter</h1></div>
+    <div align="center"><h1>Online Code Convert</h1></div>
     <div class="converter">
         <h1>Binary to Hex Converter</h1>
         <label for="binaryInput">Enter Binary:</label>
-        <input type="text" id="binaryInput">
+        <input type="text" id="binaryInput" oninput="sanitizeInput()">
         <button onclick="convertBinaryToHex()">Convert</button>
         <p>Hexadecimal Result: <span id="hexResult"></span></p>
     </div>
     <script>
+        function sanitizeInput() {
+            const binaryInput = document.getElementById('binaryInput');
+            binaryInput.value = binaryInput.value.replace(/[^01]/g, '');
+        }
+
         function convertBinaryToHex() {
             const binaryInput = document.getElementById('binaryInput').value;
 
-            const binary = binaryInput.replace(/[^01]/g, '');
-            
-            if (binary === '') {
+            if (binaryInput === '') {
                 alert('Please enter a valid binary number.');
                 return;
             }
 
             const hexResult = document.getElementById('hexResult');
             try {
-                const hex = parseInt(binary, 2).toString(16).toUpperCase();
+                const hex = parseInt(binaryInput, 2).toString(16).toUpperCase();
                 hexResult.textContent = hex;
             } catch (error) {
                 alert('An error occurred while converting the binary number to hex.');
